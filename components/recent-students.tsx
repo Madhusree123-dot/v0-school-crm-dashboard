@@ -1,68 +1,58 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
-const students = [
-  {
-    name: "Emma Johnson",
-    grade: "10th Grade",
-    status: "Present",
-    initials: "EJ",
-  },
-  {
-    name: "Michael Chen",
-    grade: "11th Grade",
-    status: "Present",
-    initials: "MC",
-  },
-  {
-    name: "Sophia Rodriguez",
-    grade: "9th Grade",
-    status: "Absent",
-    initials: "SR",
-  },
-  {
-    name: "James Wilson",
-    grade: "12th Grade",
-    status: "Present",
-    initials: "JW",
-  },
-  {
-    name: "Olivia Brown",
-    grade: "10th Grade",
-    status: "Late",
-    initials: "OB",
-  },
-]
+type Student = {
+  id: number
+  name: string
+  age?: number
+  email?: string
+  image?: string
+  company?: string
+}
 
-export function RecentStudents() {
+type Props = {
+  students?: Student[]
+}
+
+function initials(name: string) {
+  return name
+    .split(' ')
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
+}
+
+export function RecentStudents({ students = [] }: Props) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Recent Students</CardTitle>
-        <CardDescription>Latest student activity</CardDescription>
+        <CardDescription>Latest student list</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          {students.map((student) => (
-            <div key={student.name} className="flex items-center justify-between">
+        <div className="space-y-3">
+          {students.map((s) => (
+            <div key={s.id} className="flex items-center justify-between gap-4 py-2">
               <div className="flex items-center gap-3">
-                <Avatar className="h-10 w-10">
-                  <AvatarFallback className="bg-primary/10 text-primary font-medium">{student.initials}</AvatarFallback>
+                <Avatar className="h-9 w-9">
+                  {s.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={s.image} alt={s.name} className="h-9 w-9 rounded-full object-cover" />
+                  ) : (
+                    <AvatarFallback className="bg-primary/10 text-primary font-medium">{initials(s.name)}</AvatarFallback>
+                  )}
                 </Avatar>
-                <div>
-                  <p className="text-sm font-medium text-foreground">{student.name}</p>
-                  <p className="text-xs text-muted-foreground">{student.grade}</p>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">{s.name}</p>
+                  <p className="text-xs text-muted-foreground truncate">{s.email ?? s.company}</p>
                 </div>
               </div>
-              <Badge
-                variant={
-                  student.status === "Present" ? "default" : student.status === "Absent" ? "destructive" : "secondary"
-                }
-                className={student.status === "Present" ? "bg-accent text-accent-foreground" : ""}
-              >
-                {student.status}
-              </Badge>
+
+              <div className="text-right">
+                <div className="text-sm font-medium">{s.age ?? '-'}</div>
+                <div className="text-xs text-muted-foreground">{s.company ?? ''}</div>
+              </div>
             </div>
           ))}
         </div>

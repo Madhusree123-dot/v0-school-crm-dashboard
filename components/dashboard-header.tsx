@@ -10,13 +10,13 @@ export function DashboardHeader() {
           <h1 className="text-2xl font-bold text-foreground">School CRM</h1>
 
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#" className="text-sm font-medium text-primary">
+            <a href="/" className="text-sm font-medium text-primary">
               Dashboard
             </a>
-            <a href="#" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/students" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Students
             </a>
-            <a href="#" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/classes" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Classes
             </a>
             <a href="#" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
